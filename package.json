@@ -11,7 +11,7 @@
     "url": "git+https://github.com/seldenleonard/rate-my-professor-app-backend.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Selden Leonard",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/seldenleonard/rate-my-professor-app-backend/issues"
@@ -20,5 +20,9 @@
   "dependencies": {
     "express": "^4.17.1",
     "pg": "^8.5.1"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": "14.8.0"
   }
 }
