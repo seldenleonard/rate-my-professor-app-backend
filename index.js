@@ -14,6 +14,14 @@ app.get('/', (request, response) => {
   response.json({ info: 'Node.js, Express, and Postgres API' });
 });
 
+const professorsDb = require('./professors-queries');
+
+app.get('/professors', professorsDb.getProfessors);
+app.get('/professors/:id', professorsDb.getProfessorById);
+app.post('/professors', professorsDb.createProfessor);
+app.put('/professors/:id', professorsDb.updateProfessor);
+app.delete('/professors/:id', professorsDb.deleteProfessor);
+
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
 });
