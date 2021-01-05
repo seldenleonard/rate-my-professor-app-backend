@@ -1,10 +1,14 @@
+require('dotenv').config();
+
+var cors = require('cors');
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 const reviewsDb = require('./reviews-queries');
 const professorsDb = require('./professors-queries');
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
@@ -13,7 +17,7 @@ app.use(
 );
 
 app.get('/', (request, response) => {
-  response.json({ info: 'Node.js, Express, and Postgres API' });
+  response.json({ info: 'Node.js, Express, and Postgres API', env: process.env.NODE_ENV });
 });
 
 app.get('/professors', professorsDb.getProfessors);

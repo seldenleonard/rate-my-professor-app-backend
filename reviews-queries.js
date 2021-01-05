@@ -1,11 +1,18 @@
 const Pool = require('pg').Pool;
-const pool = new Pool({
-  user: 'me',
-  host: 'localhost',
-  database: 'rate_my_professor_app',
-  password: 'password',
-  port: 5432,
-});
+
+let pool;
+if (process.env.NODE_ENV === "production") {
+  const connectionString = process.env.DATABASE_URL;
+  pool = new Pool({connectionString});
+} else {
+  pool = new Pool({
+    user: 'me',
+    host: 'localhost',
+    database: 'rate_my_professor_app',
+    password: 'password',
+    port: 5432,
+  });
+}
 
 const getReviews = (request, response) => {
   pool.query('SELECT * FROM reviews ORDER BY id ASC', (error, results) => {
