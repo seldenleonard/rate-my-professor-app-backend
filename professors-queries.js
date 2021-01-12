@@ -1,4 +1,5 @@
 const Pool = require('pg').Pool;
+const Sequelize = require('sequelize');
 
 let pool;
 if (process.env.NODE_ENV === "production") {
@@ -13,6 +14,26 @@ if (process.env.NODE_ENV === "production") {
     port: 5432,
   });
 }
+
+var sequelize = new Sequelize('rate_my_professor_app', 'me', 'password', {
+  host: 'localhost',
+  dialect: 'postgres',
+
+  pool: {
+    max: 5,
+    min: 0,
+    idle: 10000
+  },
+});
+
+sequelize
+  .authenticate()
+  .then(function(err) {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(function (err) {
+    console.log('Unable to connect to the database:', err);
+  });
 
 const getProfessors = (request, response) => {
   pool.query('SELECT * FROM professors ORDER BY id ASC', (error, results) => {
