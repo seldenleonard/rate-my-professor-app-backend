@@ -25,7 +25,9 @@
     "faker": "^5.1.0",
     "knex": "^0.21.15",
     "pg": "^8.5.1",
-    "postgresql": "0.0.1"
+    "pg-hstore": "^2.3.3",
+    "postgresql": "0.0.1",
+    "sequelize": "^6.3.5"
   },
   "devDependencies": {},
   "engines": {
