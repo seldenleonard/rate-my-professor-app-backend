@@ -13,18 +13,16 @@ if (process.env.NODE_ENV === "production") {
     password: 'password',
     port: 5432,
   });
+  var sequelize = new Sequelize('rate_my_professor_app', 'me', 'password', {
+    host: 'localhost',
+    dialect: 'postgres',
+    pool: {
+      max: 5,
+      min: 0,
+      idle: 10000
+    },
+  });
 }
-
-var sequelize = new Sequelize('rate_my_professor_app', 'me', 'password', {
-  host: 'localhost',
-  dialect: 'postgres',
-
-  pool: {
-    max: 5,
-    min: 0,
-    idle: 10000
-  },
-});
 
 sequelize
   .authenticate()
