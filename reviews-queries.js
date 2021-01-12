@@ -1,4 +1,5 @@
 const Pool = require('pg').Pool;
+const Sequelize = require('sequelize');
 
 let pool;
 if (process.env.NODE_ENV === "production") {
@@ -12,8 +13,45 @@ if (process.env.NODE_ENV === "production") {
     password: 'password',
     port: 5432,
   });
+  var sequelize = new Sequelize('rate_my_professor_app', 'me', 'password', {
+    host: 'localhost',
+    dialect: 'postgres',
+    pool: {
+      max: 5,
+      min: 0,
+      idle: 10000
+    },
+  });
 }
 
+sequelize
+  .authenticate()
+  .then(function(err) {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(function (err) {
+    console.log('Unable to connect to the database:', err);
+  });
+
+// MODELS
+var Review = sequelize.define('review', {
+  professor_id: {
+    type: Sequelize.INTEGER
+  },
+  rating: {
+    type: Sequelize.INTEGER
+  },
+  text: {
+    type: Sequelize.TEXT
+  }
+});
+
+Review.findAll({ attributes: { exclude: ['updatedAt', 'createdAt'] } }).then(function(users) {
+  console.log(users);
+});
+
+
+// CRUD
 const getReviews = (request, response) => {
   pool.query('SELECT * FROM reviews ORDER BY id ASC', (error, results) => {
     if (error) {
