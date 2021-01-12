@@ -1,5 +1,7 @@
 const Pool = require('pg').Pool;
 const Sequelize = require('sequelize');
+const Professor = require('../models/professor.js').Professor;
+
 
 let pool;
 if (process.env.NODE_ENV === "production") {
@@ -24,6 +26,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+// CONNECTION TEST
 sequelize
   .authenticate()
   .then(function(err) {
@@ -32,26 +35,6 @@ sequelize
   .catch(function (err) {
     console.log('Unable to connect to the database:', err);
   });
-
-// MODELS
-var Professor = sequelize.define('professor', {
-  name: {
-    type: Sequelize.STRING
-  },
-  school: {
-    type: Sequelize.STRING
-  },
-  department: {
-    type: Sequelize.STRING
-  },
-  title: {
-    type: Sequelize.STRING
-  }
-});
-
-Professor.findAll({ attributes: { exclude: ['updatedAt', 'createdAt'] } }).then(function(users) {
-  console.log(users);
-});
 
 // CRUD
 const getProfessors = (request, response) => {
@@ -112,6 +95,10 @@ const deleteProfessor = (request, response) => {
     response.status(200).send(`Professor deleted with ID: ${id}`);
   });
 };
+
+Professor.findAll({ attributes: { exclude: ['updatedAt', 'createdAt'] } }).then(function(users) {
+  console.log(users);
+});
 
 module.exports = {
   getProfessors,

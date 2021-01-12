@@ -1,5 +1,6 @@
 const Pool = require('pg').Pool;
 const Sequelize = require('sequelize');
+const Review = require('../models/reviews.js');
 
 let pool;
 if (process.env.NODE_ENV === "production") {
@@ -24,6 +25,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+// CONNECTION TEST
 sequelize
   .authenticate()
   .then(function(err) {
@@ -32,24 +34,6 @@ sequelize
   .catch(function (err) {
     console.log('Unable to connect to the database:', err);
   });
-
-// MODELS
-var Review = sequelize.define('review', {
-  professor_id: {
-    type: Sequelize.INTEGER
-  },
-  rating: {
-    type: Sequelize.INTEGER
-  },
-  text: {
-    type: Sequelize.TEXT
-  }
-});
-
-Review.findAll({ attributes: { exclude: ['updatedAt', 'createdAt'] } }).then(function(users) {
-  console.log(users);
-});
-
 
 // CRUD
 const getReviews = (request, response) => {
@@ -109,6 +93,10 @@ const deleteReview = (request, response) => {
     response.status(200).send(`Review deleted with ID: ${id}`);
   });
 };
+
+Review.findAll({ attributes: { exclude: ['updatedAt', 'createdAt'] } }).then(function(users) {
+  console.log(users);
+});
 
 module.exports = {
   getReviews,

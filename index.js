@@ -5,8 +5,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT || 3000;
-const reviewsDb = require('./reviews-queries');
-const professorsDb = require('./professors-queries');
+const reviewsDb = require('./controllers/reviews-queries');
+const professorsDb = require('./controllers/professors-queries');
 
 app.use(cors());
 app.use(bodyParser.json());
