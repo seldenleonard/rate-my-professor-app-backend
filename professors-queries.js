@@ -33,6 +33,27 @@ sequelize
     console.log('Unable to connect to the database:', err);
   });
 
+// MODELS
+var Professor = sequelize.define('professor', {
+  name: {
+    type: Sequelize.STRING
+  },
+  school: {
+    type: Sequelize.STRING
+  },
+  department: {
+    type: Sequelize.STRING
+  },
+  title: {
+    type: Sequelize.STRING
+  }
+});
+
+Professor.findAll({ attributes: { exclude: ['updatedAt', 'createdAt'] } }).then(function(users) {
+  console.log(users);
+});
+
+// CRUD
 const getProfessors = (request, response) => {
   pool.query('SELECT * FROM professors ORDER BY id ASC', (error, results) => {
     if (error) {
