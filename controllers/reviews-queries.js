@@ -1,11 +1,12 @@
 const Pool = require('pg').Pool;
 const Sequelize = require('sequelize');
-const Review = require('../models/reviews.js');
+const Review = require('../models/index.js').review;
 
 let pool;
 if (process.env.NODE_ENV === "production") {
   const connectionString = process.env.DATABASE_URL;
   pool = new Pool({connectionString});
+  var sequelize = new Sequelize(connectionString);
 } else {
   pool = new Pool({
     user: 'me',
@@ -14,7 +15,7 @@ if (process.env.NODE_ENV === "production") {
     password: 'password',
     port: 5432,
   });
-  var sequelize = new Sequelize('rate_my_professor_app', 'me', 'password', {
+  var localSequelize = new Sequelize('rate_my_professor_app', 'me', 'password', {
     host: 'localhost',
     dialect: 'postgres',
     pool: {
@@ -26,7 +27,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // CONNECTION TEST
-sequelize
+localSequelize
   .authenticate()
   .then(function(err) {
     console.log('Connection has been established successfully.');

@@ -2,7 +2,6 @@ const Pool = require('pg').Pool;
 const Sequelize = require('sequelize');
 const Professor = require('../models/professor.js').Professor;
 
-
 let pool;
 if (process.env.NODE_ENV === "production") {
   const connectionString = process.env.DATABASE_URL;
