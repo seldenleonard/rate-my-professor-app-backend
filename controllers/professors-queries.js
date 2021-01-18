@@ -1,6 +1,6 @@
 const Pool = require('pg').Pool;
 const Sequelize = require('sequelize');
-const Professor = require('../models/professor.js').Professor;
+const Professor = require('../models/index.js').professor;
 
 let pool;
 if (process.env.NODE_ENV === "production") {
