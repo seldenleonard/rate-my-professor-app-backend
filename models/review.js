@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   });
   Review.associate = (models) => {
     Review.belongsTo(models.Professor, {
-      foreignKey: 'professor_id',
+      foreignKey: 'id',
       onDelete: 'CASCADE',
     });
   };
